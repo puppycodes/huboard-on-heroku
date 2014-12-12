@@ -8,8 +8,12 @@
   1. [How to customize column order](https://github.com/rauhryan/huboard/wiki#wiki-labels-explained)
   1. [How to configure work in progress limits](https://github.com/rauhryan/huboard/wiki#wiki-labels-explained)
   1. [How link repositories together](https://github.com/rauhryan/huboard/wiki#wiki-linking-repositories)
-  1. [How deploy HuBoard to heroku](https://github.com/rauhryan/huboard/wiki/Deploying)
 
+## Deploy to Heroku
+
+To get your own instance of HuBoard running on Heroku, click the button below:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cobyism/huboard-on-heroku)
 
 ## How to contribute
 
