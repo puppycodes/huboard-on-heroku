@@ -1,0 +1,30 @@
+{
+  "name": "HuBoard",
+  "env": {
+    "GITHUB_CLIENT_ID": {
+      "description": "Your GitHub OAuth application client ID"
+    },
+    "GITHUB_SECRET": {
+      "description": "Your GitHub OAuth application secret"
+    },
+    "GITHUB_API_ENDPOINT": {
+      "description": "GitHub instance API endpoint",
+      "value": "https://api.github.com/"
+    },
+    "GITHUB_WEB_ENDPOINT": {
+      "description": "GitHub instance web endpoint",
+      "value": "https://github.com/"
+    },
+    "SECRET_KEY": {
+      "generator": "secret"
+    },
+    "SESSION_SECRET": {
+      "generator": "secret"
+    }
+  },
+  "addons": [
+    "newrelic",
+    "memcachier",
+    "cloudant"
+  ]
+}
