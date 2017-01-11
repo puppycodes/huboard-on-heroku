@@ -1,0 +1,73 @@
+<div class="navbar navbar-static-top">
+ <div class="navbar-inner">
+   <div class="container-fluid">
+    <ul class="nav breadcrumbs">
+      <li><a href="/dashboard" class="home"><i class="ui-icon ui-icon-menu"></i></a></li>
+      <li><a href="{{model.userUrl}}">{{model.repo.owner.login}}</a></li>
+      <li><a href="{{model.repoUrl}}">{{model.repo.name}}</a></li>
+      <li>
+         {{render "search"}} 
+      </li>
+    </ul>
+    {{flash/hb-flash-message}}
+     <ul class="nav pull-right">
+      {{#link-to 'milestones' tagName="li" href=false classNames="hover-border-top"}}
+        {{#link-to 'milestones' bubbles=false}}
+          Milestones
+        {{/link-to}}
+      {{/link-to}}
+      {{#link-to 'index' tagName="li" href=false classNames="hover-border-top"}}
+        {{#link-to 'index' bubbles=false}}
+          Tasks
+        {{/link-to}}
+      {{/link-to}}
+      {{#if loggedIn}}
+        <li class="dropdown">
+          <a class="dropdown-toggle avatar" data-toggle="dropdown" href="#">
+          
+          {{hb-avatar user=currentUser width="30"}} <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/settings/profile">Account</a>
+            </li>
+            <li>
+              <a href="/logout">Logout</a>
+            </li>
+          </ul>
+        </li>
+      {{else}}
+         <li>
+           <form action="/login/github" method="GET">
+             <input type="hidden" name="redirect_to" value="/{{model.repo.full_name}}" />
+             <button class="hb-button"> Sign in </button>
+          </form>
+         </li>
+      {{/if}}
+     </ul>
+   </div>
+ </div>
+</div>
+<div class="application-outlet">
+{{outlet}}
+</div>
+
+<div id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <img class="animate-before" src="{{asset-path "LogoFullPurpleLight.png" }}"/>
+      </div>
+      <div class="links span6">
+        <a href="/site/terms">terms</a>
+        <a href="/site/privacy">privacy</a>
+        <a href="https://github.com/huboard/huboard">github</a>
+        <a href="mailto:support@huboard.com">contact</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{outlet "loading"}}
+{{outlet "modal"}}
+
+

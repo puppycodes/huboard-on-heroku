@@ -1,0 +1,44 @@
+{{#if editable}}
+<h5 class="hb-selector-title" {{action "toggleSelector"}}> 
+  <i  class="pull-right ui-icon ui-icon-gear"></i>
+  {{ title }}
+</h5>
+{{else}}
+<h5 class="hb-selector-title"> 
+  {{ title }}
+</h5>
+{{/if}}
+
+<div class="hb-display-items">
+  {{#each selected as |label|}}
+  <div class="hb-display-item background" style={{selected-label-style label.color}}>
+  <span>
+    {{label.name}}
+  </span>
+  </div>
+  {{else}}
+  <div class="hb-selected empty">
+    {{noLabelsMessage}}
+  </div>
+  {{/each}}
+</div>
+{{#if editable}}
+<div class="hb-flyout">
+  <div class="hb-header">
+    Assign labels to this issue
+  </div>
+  <div class="hb-text-filter">
+    {{input placeholder="Filter labels" value=filterLabels}}
+  </div>
+  <div class="hb-label-items">
+    {{#each listItems as |label|}}
+    {{#hb-label label=label}}
+    <span>
+      {{label.name}}
+    </span>
+    {{/hb-label}}
+    {{/each}}
+  </div>
+</div>
+{{/if}}
+

@@ -1,0 +1,216 @@
+@import "bourbon/bourbon";
+@import "css3/filters";
+@import "colors";
+@import "mixins";
+@import "font";
+@import "fonts";
+@import "buttons";
+@import "repos";
+@import "board";
+@import "card";
+@import "card_states";
+@import "header";
+@import "footer";
+@import "overlay";
+@import "section";
+@import "credit_cards";
+@import "assignees";
+@import "flex_form";
+@import "issue";
+@import "integrations";
+@import 'repo-settings';
+@import 'boxed-group';
+@import "breadcrumbs";
+@import "components/selector";
+@import "components/health";
+@import "components/flash-message";
+@import "components/issue-status";
+@import "components/column-indicator";
+@import 'textcomplete';
+@import "tooltips";
+@import "markdown";
+@import "milestone";
+@import "date_picker";
+@import "sidebar";
+
+body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow:hidden;
+}
+
+.wrap-fix {
+  min-width: 0;
+}
+
+.ember-application > .ember-view {
+   @include display(flex);
+   @include flex-direction(column);
+   min-height: 100vh;
+   height: 100vh; //<- required by IE11
+   position: relative;
+}
+
+.ember-application > .card {
+   min-height: 0px; //<- jank! https://github.com/emberjs/ember.js/issues/11486
+   height: auto;
+}
+
+.application-outlet {
+   position: relative;
+   @include display(flex);
+   @include flex(1);
+   @include flex-direction(column);
+   > .ember-view {
+     position: relative;
+     @include display(flex);
+     @include flex(1);
+     @include flex-direction(column);
+   }
+
+   .main-content {
+     @extend %abso-hax;
+     @include display(flex);
+   }
+}
+
+[draggable] {
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  user-drag: element;
+}
+
+
+#footer { display: none; }
+
+.main-content {
+  position:relative;
+
+  > .content {
+     @include display(flex);
+     @include flex(1);
+     @include flex-direction(column);
+
+     position: relative;
+     background-color: #fafafa;
+  }
+}
+
+/* crap crap crap */
+.navbar {
+  &.navbar-fixed-top, &.navbar-static-top {
+    .navbar-inner {
+      @include box-shadow(none);
+    }
+  }
+  .navbar-inner {
+    @include linear-gradient(#F9F9F9, #F3F3F3);
+    border-bottom: 1px solid $hb-grey-light;
+   
+  }
+  .nav {
+    form {
+       padding: 0;
+       margin: 0;
+    }
+
+    .dropdown .avatar, .dropdown.open .avatar {
+      position: relative;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      margin-left: 10px;
+
+      &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: ' ';
+        width: 1px;
+        height: 42px;
+        background-color: $hb-grey-light;
+        border-right: 1px solid #fff;
+      }
+      
+      &:hover {
+        border-top: none;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+
+      .caret {
+        margin-top: 14px;
+      
+      }
+    }
+    .hover-border-top {
+      > a {
+        padding-top: 12px;
+      }
+    }
+    > li {
+      > a {
+        &:hover {
+          border-top: 3px solid $hb-purple-dark;
+          padding-top: 9px;
+        }
+      }
+      &.active, &.dropdown.open {
+        > a, > a:hover, > .dropdown-toggle, > .dropdown-toggle:hover  {
+            border-top: 3px solid $hb-purple;
+            padding-top: 9px;
+            background:none;
+            @include box-shadow(none);
+            &.avatar {
+              padding-top:2px;
+            }
+        }
+      }
+
+    }
+  }
+
+}
+
+.nav-list {
+  > li {
+    margin-bottom: 3px;
+    > a {
+      padding: 3px 12px;
+      border-radius: 3px;
+      &.active, &.active:hover {
+        background: $hb-purple;
+        color: white;
+        text-shadow: none;
+      }
+    }
+  }
+
+}
+  
+.tab-pane {
+  display: none;
+  margin-top: 1px;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.dropdown-menu {
+  li {
+    > a {
+      &:hover, &:focus {
+           @include linear-gradient(lighten($hb-purple, 5%), $hb-purple);
+      }
+    }
+  }
+}
+
+.hide {display:none;}
+
+.breadcrumb {
+  margin: -43px 0 7px 0; 
+}

@@ -1,0 +1,649 @@
+@import "arrow";
+
+$milestone-column-width: 280px;
+$task-column-width: 180px;
+
+.main-toolbar {
+  z-index: 3;
+  height: 40px;
+  min-height: 40px;
+  line-height: 40px;
+  padding: 0 36px;
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+
+  @include display(flex);
+  @include justify-content(space-between);
+  
+  .filters-clear {
+    @include flex(1);
+    padding: 0 12px;
+  }
+
+  .create-button {
+    .hb-icon-link {
+      padding: 6px;
+      color: #999;
+      @include transition(color .5s);
+      .ui-icon {
+        position: relative;
+        top: 3px;
+      }
+      &:hover {
+        color: #666;
+      }
+      @-webkit-keyframes pulsate {
+        0%{opacity: 0.5;}
+        50%{opacity: 1.0;}
+        100%{opacity: 0.5;}
+      }
+      @-moz-keyframes pulsate {
+        0%{opacity: 0.5;}
+        50%{opacity: 1.0;}
+        100%{opacity: 0.5;}
+      }
+      @-ms-keyframes pulsate {
+        0%{opacity: 0.5;}
+        50%{opacity: 1.0;}
+        100%{opacity: 0.5;}
+      }
+      @-o-keyframes pulsate {
+        0%{opacity: 0.5;}
+        50%{opacity: 1.0;}
+        100%{opacity: 0.5;}
+      }
+      @keyframes pulsate {
+        0%{opacity: 0.5;}
+        50%{opacity: 1.0;}
+        100%{opacity: 0.5;}
+      }
+      .ui-icon-error {
+        @include animation(pulsate 2s ease-out);
+        @include animation-iteration-count(infinite);
+        opacity: 0.5;
+      }
+    }
+  }
+   a {
+    &:hover {
+     text-decoration: none;
+    }
+   }
+}
+.main-canvas {
+  position: relative;
+  @include display(flex);
+  @include flex(1);
+}
+
+.board-wrapper {
+  .task-board {
+    @include display(flex);
+    @include flex(1 1 auto);
+  }
+  .board {
+    @extend %u-fancy-scrollbar;
+    padding: 6px 24px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    &::-webkit-scrollbar-button {
+        display:block;
+        height: 9px;
+        width: 9px
+    }
+    &::-webkit-scrollbar {
+        height: 12px;
+        width: 12px
+    }
+  }
+  position: relative;
+  @include display(flex);
+  @include flex(1);
+  @include align-content(stretch);
+
+  .board--task-board {
+    @include display(flex);
+    @include flex(1);
+    @include align-content(stretch);
+    @include align-items(baseline);
+    @-moz-document url-prefix() {
+      display: block;
+      white-space: nowrap;
+    }
+  }
+
+  .board--milestones {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .board {
+    @extend %abso-hax;
+  }
+}
+
+
+.column.task-column {
+  @include flex(1);
+  @include display(flex);
+  @include flex-direction(column);
+  @-moz-document url-prefix() {
+    display: inline-block;
+    max-width: $milestone-column-width;
+    min-width: $task-column-width;
+  }
+  @for $i from 1 through 20 {
+    &.columns-#{$i}{
+      @-moz-document url-prefix() {
+        max-width: percentage(0.99/$i);
+        width: percentage(0.99/$i);
+      }
+    }
+  }
+}
+
+
+.column {
+  min-width: $task-column-width;
+  height: 100%;
+  float:none;
+  vertical-align: top;
+  padding: 0px 10px;
+  @include box-sizing(border-box);
+  @include transition(width,flex 0.4s ease-out);
+
+  .column-contents{
+    height: 100%;
+    @include display(flex);
+    @include flex-direction(column);
+    @include flex(1 1 auto);
+    min-width: 0px;
+    .cards {
+      @include flex(1 1 auto);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 2px 1px 20px 0px;
+
+      @extend %u-fancy-scrollbar;
+    }
+  }
+  &.hb-state-collapsed {
+    @include flex(0 0 90px !important);
+    width: 90px !important;
+  }
+  @include transition(width 0.4s ease-out);
+}
+
+.column.milestone {
+  width: $milestone-column-width;
+  max-width: $milestone-column-width;
+  display: inline-block;
+  .column-contents{
+    @include flex(0 0 $milestone-column-width);
+    max-width: $milestone-column-width;
+  }
+}
+
+.board-dragging {
+  .column.milestone {
+    &.hb-state-collapsed {
+      .text {
+        display: inline-block;
+      }
+    }
+  }
+  .collapsed {
+    width: 70px;
+  }
+
+  @include transition(width 0s);
+}
+
+
+.container-fluid {
+   padding-right: 25px;
+   padding-left: 25px;
+}
+
+
+.column {
+  &.hb-state-collapsed {
+    input {
+      visibility: hidden;
+    }
+  }
+  .create-issue {
+    @include flex(0 0 auto);
+    position: relative;
+
+    margin-bottom: 6px;
+    padding: 6px;
+
+    background: white;
+    @include box-shadow(inset 0 0px 1px rgba(0,0,0, 0.3));
+    border: 1px solid #e5e5e5;
+    border-bottom-color: darken(#e5e5e5, 5%); 
+    @include clearfix;
+
+    .ui-icon {
+      position: absolute;
+      top: 6px;
+      right: 4px;
+      cursor: pointer;
+      padding: 8px;
+      color: white;
+      background: $hb-purple;
+      border-radius: 1px;
+      opacity: 0.6;
+
+      &:hover {
+        @include box-shadow(0 0px 1px rgba(0,0,0, 0.3));
+        border: 1px solid $hb-purple;
+        border-bottom-color: $hb-purple-dark; 
+        padding: 7px;
+        opacity: 1;
+      }
+      &:active {
+        @include box-shadow(inset 0 1px 1px $hb-purple-dark);
+        border: none;
+        padding: 8px;
+        top: 7px;
+        opacity: 1;
+      }
+    }
+
+
+    input {
+      box-sizing: border-box;
+      height: auto;
+      width: calc(100% - 33px);
+      margin: 0;
+      padding: 6px;
+      outline: none;
+      border: none;
+      background: white;
+      @include box-shadow(none);
+      @include transition(all 0s);
+
+
+      &:focus, &:hover {
+        outline: none;
+        border: none;
+        background: white;
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 5px;
+      }
+
+    }
+
+  }
+
+}
+
+
+.backlog { 
+  white-space: nowrap;
+  overflow-x: auto;
+  .column {
+    float: none;
+    display: inline-block;
+  }
+}
+
+.column .hb-column-header {
+  @include flex(0 0 auto);
+  line-height: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  background: #f3f3f3;
+
+  font-size: 100%;
+  @extend %font-headings;
+
+  small {
+    float:right;
+    line-height: 20px;
+    font-style: italic;
+  }
+  .hb-state-error {
+    color: $hb-red;
+  }
+}
+
+.hb-task-column .hb-column-header {
+  @extend .arrow;
+}
+
+.backlog {
+    .dim {
+      opacity: 0.4;
+    }
+    .active {
+    }
+    .filter-hidden {
+      cursor: default;
+      border:0;
+      padding:0;
+      margin:0;
+      height:0;
+      .ember-view, .hb-card-tray {
+        display: none;
+      }
+      
+    }
+}
+.board {
+  @include user-select(none);
+    .dim {
+      opacity: 0.4;
+      @include transition (opacity 0.6s, ease-out);
+      @include transition (filter 0.6s, ease-out);
+      @include prefixer(filter, grayscale(100%) opacity(40%));
+      @include box-shadow(inset 0 0px 1px rgba(0,0,0, 0.3));
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    }
+    .active {
+    }
+
+    .filter-hidden {
+      cursor: default;
+      padding:0;
+      margin:0;
+      height:0;
+      border:0;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      .ember-view, .hb-card-tray {
+        display: none;
+      }
+    }
+    .filter-hidden + .filter-hidden {
+      padding:0;
+      margin:0;
+    }
+
+}
+
+.column {
+  .is-draggable {
+    cursor:pointer;
+  }
+  .ui-sortable-helper {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: -ms-grabbing;
+    cursor: grabbing;
+    @include transform(rotate(3deg));
+  }
+}
+
+
+
+
+
+.column .ui-sortable-placeholder {
+  background: $borderColor;
+  list-style: none;
+  border: 1px dotted $hb-purple;
+  margin-bottom: 10px;
+  * {
+    visibility: hidden;
+  }
+}
+
+
+.filters {
+  list-style: none;
+  margin:0;
+  padding:0 20px 0 0;
+}
+
+.filters li {
+  margin-bottom: 10px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.filters li.colored a {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left-style: solid;
+  border-left-width: 3px;
+}
+
+.filters li.-x7965cc a{
+  border-left-color: #7965cc;
+}
+
+.filters li.clear-filters, .filters li.clear-filters a {
+  background: none;
+  color:$grey;
+}
+.filters li.clear-filters {
+  border-radius: 0;
+  border-bottom: 1px solid $darkGrey;
+}
+.filters li.clear-filters a:hover {
+  color:$grey;
+}
+
+.filters li a {
+  position:relative;
+  padding: 4px;
+  font-size: 12px;
+  display:block;
+  padding-right:25px;
+  text-decoration: none;
+  border-radius: 4px;
+  color:#777;
+}
+
+.filters {
+  .filter-group {
+    list-style: none;
+    margin: 0px;
+    h5 {
+      padding: 2px 0px 2px 4px;
+      cursor: pointer;
+      &:hover {
+        background: #efefef;
+        border-color: #efefef;
+        border-style: solid;
+        border-radius: 2px;
+        border-width: 0px;
+      }
+      i {
+        position: relative;
+        float: right;
+        padding: 2px 2px 0px 0px;
+        font-size: 14px;
+      }
+    }
+    &.collapsed {
+      .filter {
+        display: none;
+      }
+    }
+  }
+}
+
+.filters li a strong { 
+  position: absolute;
+  top:12px;
+  right:10px;
+}
+
+.filter a.active, .filter a.active:hover {
+  background-color: $hb-purple;
+  color: #fff;
+}
+.filter a.dim, .filter a.dim:hover {
+  background-color: $hb-purple;
+  background-color: rgba($hb-purple,0.6);
+  color: #fff;
+
+}
+
+.filter {
+
+  .ui-icon {
+    // start: UX Experiment 
+    display:none;
+    // end: UX Experiment 
+
+    position: absolute;
+    top: 13px;
+    right: 3px;
+    width: 22px;
+    display:none;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+
+    }
+  }
+  a:hover {
+    background-color:#efefef;
+  }
+
+  .dim:hover, .active:hover { 
+    .ui-icon {
+      display:inline;
+      // start: UX Experiment 
+      display:none;
+      // end: UX Experiment 
+    }
+  }
+}
+.column.no-milestone {
+  margin: -6px 6px -6px 0;
+  padding: 6px 16px 6px 10px;
+  border-right: 1px solid #ddd;
+}
+
+.column {
+
+  .hb-column-header {
+    cursor: pointer;
+  }
+  &.hb-state-collapsed {
+    min-width: 90px !important;
+  }
+  .collapsed {
+    cursor: pointer;
+    display: none;
+    background: #f3f3f3;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    @include flex(1);
+    .collapsed-title {
+      @include transform(rotate(90deg));
+      position: relative;
+      top: 100px;
+      font-size: 20px;
+      color: #999;
+      white-space: nowrap;
+    }
+  }
+
+  .hb-column-header {
+    .ui-icon {
+      color: #999;
+      opacity: 0.5;
+      padding: 0px 2px;
+    }
+    .ui-icon-plus {
+      display:none;
+    }
+  }
+  &.hb-state-collapsed {
+    @include flex(1 0 80px);
+    .hb-column-header .ui-icon-plus { display:inline; }
+    .collapsed {
+      @include display(flex);
+    }
+    .hb-column-header span, .hb-column-header .ui-icon-minus, .hb-column-header small {
+      display:none;
+    }
+
+    .cards {
+      @include flex(0 1 auto !important);
+      min-height: 0;
+      border:0;
+      padding: 0;
+      margin: 0;
+      width: 0;
+      height: 0;
+      .card {
+        border:0;
+        padding: 0;
+        margin: 0;
+        width: 0;
+        height: 0;
+        > div {
+          display:none;
+        }
+      }
+    }
+
+  }
+  &.hb-state-collapsed {
+    @include flex(0 1 auto);
+    width: 90px !important;
+    .hb-column-header .ui-icon-plus { display:inline; }
+    .collapsed {
+      display: block;
+    }
+   .hb-column-header span, .hb-column-header .ui-icon-minus, .hb-column-header small, .hb-column-header .ui-icon-gear {
+      display:none;
+    }
+  }
+  &.hb-state-collapsed.hovering {
+      @include flex(1);
+      width: auto;
+      .collapsed {
+        display: none;
+      }
+      ul {
+        display:block;
+      }
+   }
+}
+@media only screen and (max-width: 959px) {
+  .board {
+    .task-board {
+      @include flex-direction(column);
+    }
+    .column {
+      @include flex(0 1 auto);
+      max-width: 959px;
+
+      .sortable {
+        min-height: 72px;
+      }
+
+      &.hb-state-collapsed {
+        width: auto;
+
+        > h3 span,  > h3 small {
+          display:inline;
+        }
+        .sortable {
+          min-height: 0;
+        }
+
+       
+        &.hovering {
+          ul {
+            display:none;
+          }
+        }
+        .collapsed {
+          display:none;
+        }
+        
+      }
+    }
+  }
+}

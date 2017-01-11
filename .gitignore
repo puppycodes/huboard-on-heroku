@@ -1,0 +1,62 @@
+*.env
+.env
+.vagrant
+production.env
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+
+# TODO Comment out these rules if you are OK with secrets being uploaded to the repo
+# config/initializers/secret_token.rb
+# config/secrets.yml
+#
+# ## Environment normalisation:
+/.bundle
+/vendor/bundle
+#
+# # these should all be checked in to normalise the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
+#
+# # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+#
+# # if using bower-rails ignore default bower_components path bower.json files
+bower_components
+*.bowerrc
+public/assets
+#
+# #Ignore pow enironment settings
+.powenv
+
+# Ignore puppet files
+.tmp/
+puppet/modules/
+
+
+## Ember cli 
+# compiled output
+node_modules
+ember-app/dist
+ember-app/tmp
+
+# dependencies
+ember-app/node_modules
+ember-app/bower_components
+
+# misc
+ember-app/.sass-cache
+ember-app/connect.lock
+ember-app/coverage/*
+ember-app/libpeerconnection.log
+ember-app/npm-debug.log
+ember-app/testem.log
+modules/
